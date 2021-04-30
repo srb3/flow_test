@@ -45,6 +45,8 @@ jobs:
           kubectl get services -A
           echo "Configmaps:"
           kubectl get configmap -A
+          echo "Metallb Configmap:"
+          kubectl describe configmaps -n metallb-system config
           echo "Example Service:"
           kubectl describe services example-service
 #      - name: Install deps, create config
