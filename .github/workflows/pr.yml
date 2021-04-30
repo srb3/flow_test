@@ -33,12 +33,15 @@ jobs:
           kubectl patch configmap config -n metallb-system -p '{"data":{"config": "address-pools:\n- name: default\n protocol: layer2\n addresses:\n - 192.168.1.10-192.168.1.20"}}'
       - name: wait
         run: while [[ $(kubectl -n kube-system get pods -l k8s-app=kube-dns -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for pod" && sleep 1; done
+      - name: depoloy service
+        run: kubectl apply -f svc.yml
       - name: Discovery
         run: |
           ip a
-          kubectl -A get pods
-          kubectl -A get services
-          kubectl -A get configmap
+          kubectl get pods -A
+          kubectl get services -A
+          kubectl get configmap
+          kubectl describe services example-service
 #      - name: Install deps, create config
 #        run: |
 #          gem install bundler --user
