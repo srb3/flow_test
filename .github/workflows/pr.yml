@@ -37,10 +37,15 @@ jobs:
         run: kubectl apply -f svc.yml
       - name: Discovery
         run: |
+          sleep 60
           ip a
+          echo "Pods:"
           kubectl get pods -A
+          echo "Services:"
           kubectl get services -A
-          kubectl get configmap
+          echo "Configmaps:"
+          kubectl get configmap -A
+          echo "Example Service:"
           kubectl describe services example-service
 #      - name: Install deps, create config
 #        run: |
