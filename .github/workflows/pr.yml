@@ -30,7 +30,7 @@ jobs:
       - name: install metallb
         run: |
           minikube addons enable metallb
-          kubectl patch configmap config -n metallb-system -p '{"data":{"config": "address-pools:\n- name: default\n protocol: layer2\n addresses:\n - 10.1.1.80 - 10..1.90"}}'
+          kubectl patch configmap config -n metallb-system -p '{"data":{"config": "address-pools:\n- name: default\n protocol: layer2\n addresses:\n - 10.1.1.80 - 10.1.1.90"}}'
       - name: wait
         run: while [[ $(kubectl -n kube-system get pods -l k8s-app=kube-dns -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for pod" && sleep 1; done
       - name: depoloy service
