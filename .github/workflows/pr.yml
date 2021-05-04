@@ -51,6 +51,8 @@ jobs:
           kubectl describe services example-service
           cat /etc/resolv.conf
           cat /etc/os-release
+          echo "192.168.1.88 home.test.dev" > /etc/hosts
+          cat /etc/hosts
 #      - name: Install deps, create config
 #        run: |
 #          gem install bundler --user
