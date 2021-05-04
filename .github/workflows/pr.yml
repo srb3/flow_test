@@ -51,7 +51,6 @@ jobs:
           kubectl describe services example-service
           cat /etc/resolv.conf
           cat /etc/os-release
-          echo "192.168.1.88 home.test.dev" > /etc/hosts
           echo "192.168.1.88 home.test.dev" | sudo tee -a /etc/hosts
           cat /etc/hosts
 #      - name: Install deps, create config
