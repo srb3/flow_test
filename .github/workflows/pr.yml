@@ -49,6 +49,7 @@ jobs:
           kubectl describe configmaps -n metallb-system config
           echo "Example Service:"
           kubectl describe services example-service
+          cat /etc/resolv.conf
 #      - name: Install deps, create config
 #        run: |
 #          gem install bundler --user
