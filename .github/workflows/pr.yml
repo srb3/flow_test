@@ -50,6 +50,7 @@ jobs:
           echo "Example Service:"
           kubectl describe services example-service
           cat /etc/resolv.conf
+          cat /etc/os-release
 #      - name: Install deps, create config
 #        run: |
 #          gem install bundler --user
