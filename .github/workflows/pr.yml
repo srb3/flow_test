@@ -26,7 +26,9 @@ jobs:
           kubernetes version: 'v1.20.2'
           github token: ${{ secrets.GITHUB_TOKEN }}
       - name: install ingress
-        run: minikube addons enable ingress
+        run: |
+          minikube addons enable ingress
+          kubectl patch configmap -n kube-system nginx-load-balancer-conf --patch '{"data":{"proxy-buffer-size":"16k"}}'
       - name: install metallb
         run: |
           minikube addons enable metallb
