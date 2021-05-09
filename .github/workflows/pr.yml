@@ -5,9 +5,6 @@ on:
     paths-ignore:
       - '**/*.md'
 
-env:
-  TERRAFORM_VERSION: 0.14.7
-
 jobs:
   deployment:
     name: setup
@@ -16,55 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.7.2'
-      - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.3.0
-        with:
-          minikube version: 'v1.18.1'
-          kubernetes version: 'v1.20.2'
-          github token: ${{ secrets.GITHUB_TOKEN }}
-      - name: install ingress
-        run: |
-          minikube addons enable ingress
-          kubectl patch configmap -n kube-system nginx-load-balancer-conf --patch '{"data":{"proxy-buffer-size":"16k"}}'
-      - name: install metallb
-        run: |
-          minikube addons enable metallb
-          kubectl apply -f cm.yaml
-      - name: wait
-        run: while [[ $(kubectl -n kube-system get pods -l k8s-app=kube-dns -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for pod" && sleep 1; done
-      - name: depoloy service
-        run: kubectl apply -f svc.yaml
       - name: Discovery
         run: |
-          sleep 60
-          ip a
-          echo "Pods:"
-          kubectl get pods -A
-          echo "Services:"
-          kubectl get services -A
-          echo "Configmaps:"
-          kubectl get configmap -A
-          echo "Metallb Configmap:"
-          kubectl describe configmaps -n metallb-system config
-          echo "Example Service:"
-          kubectl describe services example-service
-          cat /etc/resolv.conf
-          cat /etc/os-release
-          echo "192.168.1.88 home.test.dev" | sudo tee -a /etc/hosts
-          cat /etc/hosts
-#      - name: Install deps, create config
-#        run: |
-#          gem install bundler --user
-#          bundle install
-#          cp terraform.tfvars.example terraform.tfvars
-#        working-directory: test/integration/mvp/
-#      - name: Kitchen Test
-#        run: kitchen test mvp
-#        working-directory: test/integration/mvp/
-#        env:
-#          TF_VAR_super_admin_password: ${{ secrets.SUPER_ADMIN_PASSWORD }}
-#          TF_VAR_kong_database_password: ${{ secrets.KONG_DATABASE_PASSWORD }}
-#          TF_VAR_kong_licesne: ${{ secrets.KONG_LICENSE }}
+          sudo npm install -g insomnia-inso
