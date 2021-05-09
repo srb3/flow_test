@@ -15,4 +15,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Discovery
         run: |
-          sudo npm install -g insomnia-inso
+          node --version
+          npm install -g insomnia-inso
