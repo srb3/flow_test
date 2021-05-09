@@ -22,3 +22,6 @@ jobs:
           export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
           node --version
           npm install -g insomnia-inso
+      - name: Test Inso
+        run: |
+          inso --version
