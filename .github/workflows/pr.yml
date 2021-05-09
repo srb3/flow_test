@@ -24,4 +24,5 @@ jobs:
           npm install -g insomnia-inso
       - name: Test Inso
         run: |
+          export PATH="$PATH:${HOME}/.npm-packages/bin"
           inso --version
